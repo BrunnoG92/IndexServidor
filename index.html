@@ -321,6 +321,7 @@
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .status:hover {
@@ -357,6 +358,158 @@
                 0 0 10px rgba(34, 197, 94, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             position: relative;
+        }
+
+        /* Estilos para o easter egg Matrix */
+        .matrix-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: none;
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+            overflow: hidden;
+        }
+
+        .matrix-terminal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
+        }
+
+        .matrix-text {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: matrixType 0.1s ease-in-out forwards;
+        }
+
+        .matrix-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: #00ff00;
+            animation: matrixBlink 1s infinite;
+        }
+
+        .page-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .page-loading-text {
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            margin-bottom: 30px;
+            animation: matrixGlow 2s ease-in-out infinite;
+            text-align: center;
+        }
+
+        .page-loading-bar {
+            width: 300px;
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .page-loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #00cc00);
+            width: 0%;
+            animation: loadingProgress 3s ease-in-out forwards;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .page-loading-status {
+            color: #888;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            text-align: center;
+            animation: statusBlink 1s ease-in-out infinite;
+        }
+
+        .page-content-blur {
+            filter: blur(5px);
+            opacity: 0.3;
+            transition: all 0.5s ease;
+        }
+
+        .matrix-prank {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            color: #00ff00;
+            padding: 40px;
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            text-shadow: 0 0 10px #00ff00;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            z-index: 10001;
+            display: none;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.8);
+        }
+
+        @keyframes matrixType {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes matrixGlow {
+            0%, 100% { text-shadow: 0 0 10px #00ff00; }
+            50% { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
+        }
+
+        @keyframes matrixSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes matrixBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @keyframes loadingProgress {
+            0% { width: 0%; }
+            20% { width: 15%; }
+            40% { width: 35%; }
+            60% { width: 55%; }
+            80% { width: 75%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes statusBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.5; }
         }
 
         .status-dot::before {
@@ -473,16 +626,41 @@
             </div>
 
             <!-- Status -->
-            <div class="status">
-                <div class="status-dot"></div>
-                <span>Nginx ativo e funcionando</span>
-            </div>
+        <div class="status" onclick="nginxEasterEgg()">
+            <div class="status-dot"></div>
+            <span>Nginx ativo e funcionando</span>
+        </div>
         </div>
     </div>
 
     <!-- Footer -->
     <div class="footer">
         <p>Servidor TropicalNet configurado com sucesso • Nginx Web Server</p>
+    </div>
+
+    <!-- Easter Egg Matrix -->
+    <div class="matrix-overlay" id="matrixOverlay">
+        <div class="matrix-terminal" id="matrixTerminal">
+            <!-- Conteúdo será inserido via JavaScript -->
+        </div>
+    </div>
+
+    <div class="page-loading-overlay" id="pageLoadingOverlay">
+        <div class="page-loading-text">REINICIANDO SISTEMA...</div>
+        <div class="page-loading-bar">
+            <div class="page-loading-progress"></div>
+        </div>
+        <div class="page-loading-status" id="loadingStatus">Inicializando serviços...</div>
+    </div>
+
+    <div class="matrix-prank" id="matrixPrank">
+        <div>🎭 HAHAHA! PEGADINHA! 🎭</div>
+        <div style="margin-top: 20px; font-size: 14px;">
+            Estou brincando, o sistema está funcionando perfeitamente!😄
+        </div>
+        <div style="margin-top: 20px; font-size: 12px; color: #888;">
+            Clique em qualquer lugar para continuar...
+        </div>
     </div>
 
     <script>
@@ -829,6 +1007,141 @@
         function toggleAudio() {
             isAudioEnabled = !isAudioEnabled;
             console.log('Áudio', isAudioEnabled ? 'ativado' : 'desativado');
+        }
+
+        // Easter Egg Matrix - Pegadinha épica!
+        function nginxEasterEgg() {
+            // Verificar se já há uma interação ativa
+            if (isInteractionActive || isTyping) {
+                return;
+            }
+
+            // Marcar interação como ativa
+            isInteractionActive = true;
+            currentInteraction = 'matrix-prank';
+
+            const matrixOverlay = document.getElementById('matrixOverlay');
+            const matrixTerminal = document.getElementById('matrixTerminal');
+            const pageLoadingOverlay = document.getElementById('pageLoadingOverlay');
+            const loadingStatus = document.getElementById('loadingStatus');
+            const matrixPrank = document.getElementById('matrixPrank');
+            const mainContent = document.querySelector('.main-content');
+
+            // Limpar terminal antes de usar
+            matrixTerminal.innerHTML = '';
+
+            // Mostrar overlay Matrix
+            matrixOverlay.style.display = 'block';
+
+            // Sequência de comandos do terminal
+            const terminalCommands = [
+                'root@tropicalnet:~# whoami',
+                'root',
+                '',
+                'root@tropicalnet:~# ps aux | grep nginx',
+                'root      1234  0.0  0.1  12345  6789 ?        Ss   10:30   0:00 nginx: master process',
+                'www-data  1235  0.0  0.0  12345  6789 ?        S    10:30   0:00 nginx: worker process',
+                '',
+                'root@tropicalnet:~# systemctl status nginx',
+                '● nginx.service - A high performance web server',
+                '   Active: active (running) since Mon 2024-01-01 10:30:00 UTC',
+                '',
+                'root@tropicalnet:~# echo "Iniciando desativação do sistema..."',
+                'Iniciando desativação do sistema...',
+                '',
+                'root@tropicalnet:~# systemctl stop nginx',
+                'root@tropicalnet:~# systemctl stop apache2',
+                'root@tropicalnet:~# systemctl stop mysql',
+                'root@tropicalnet:~# systemctl stop postgresql',
+                '',
+                'root@tropicalnet:~# echo "Desativando serviços críticos..."',
+                'Desativando serviços críticos...',
+                '',
+                'root@tropicalnet:~# killall -9 nginx',
+                'root@tropicalnet:~# killall -9 apache2',
+                'root@tropicalnet:~# killall -9 mysql',
+                '',
+                'root@tropicalnet:~# echo "Sistema comprometido!"',
+                'Sistema comprometido!',
+                '',
+                'root@tropicalnet:~# shutdown -h now',
+                'Broadcast message from root@tropicalnet',
+                'The system is going down for halt NOW!',
+                '',
+                'root@tropicalnet:~# ',
+                'CONEXÃO PERDIDA...'
+            ];
+
+            // Função para adicionar texto ao terminal
+            let commandIndex = 0;
+            const addTerminalText = () => {
+                if (commandIndex < terminalCommands.length) {
+                    const textDiv = document.createElement('div');
+                    textDiv.className = 'matrix-text';
+                    textDiv.textContent = terminalCommands[commandIndex];
+                    matrixTerminal.appendChild(textDiv);
+                    commandIndex++;
+                    setTimeout(addTerminalText, 200);
+                } else {
+                    // Adicionar cursor piscante
+                    const cursorDiv = document.createElement('div');
+                    cursorDiv.className = 'matrix-cursor';
+                    matrixTerminal.appendChild(cursorDiv);
+                    
+                    // Pausa dramática de 3 segundos
+                    setTimeout(() => {
+                        matrixOverlay.style.display = 'none';
+                        
+                        // Aplicar blur na página principal
+                        mainContent.classList.add('page-content-blur');
+                        
+                        // Mostrar loading de reinicialização
+                        pageLoadingOverlay.style.display = 'flex';
+                        
+                        // Sequência de status realistas
+                        const loadingStatuses = [
+                            'Inicializando serviços...',
+                            'Carregando módulos do sistema...',
+                            'Verificando integridade dos arquivos...',
+                            'Configurando rede...',
+                            'Iniciando Nginx...',
+                            'Verificando certificados SSL...',
+                            'Carregando configurações...',
+                            'Finalizando inicialização...'
+                        ];
+                        
+                        let statusIndex = 0;
+                        const statusInterval = setInterval(() => {
+                            if (statusIndex < loadingStatuses.length) {
+                                loadingStatus.textContent = loadingStatuses[statusIndex];
+                                statusIndex++;
+                            } else {
+                                clearInterval(statusInterval);
+                            }
+                        }, 400);
+                        
+                        // Após 3.5 segundos, mostrar a pegadinha
+                        setTimeout(() => {
+                            pageLoadingOverlay.style.display = 'none';
+                            mainContent.classList.remove('page-content-blur');
+                            matrixPrank.style.display = 'block';
+                            
+                            // Adicionar listener para fechar
+                            const closePrank = () => {
+                                matrixPrank.style.display = 'none';
+                                isInteractionActive = false;
+                                currentInteraction = null;
+                                document.removeEventListener('click', closePrank);
+                            };
+                            
+                            document.addEventListener('click', closePrank);
+                        }, 3500);
+                    }, 3000);
+                }
+            };
+
+            // Iniciar sequência
+            addTerminalText();
         }
 
         // Adicionar tecla de atalho para desativar áudio (ESC)
