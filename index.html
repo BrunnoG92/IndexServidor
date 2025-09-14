@@ -536,29 +536,91 @@
 
         // Função para interação com o robô
         function robotClick() {
+            // Verificar se já há uma interação ativa ou se está digitando
+            if (isInteractionActive || isTyping) {
+                return; // Ignorar se já há uma interação em andamento ou se está digitando
+            }
+            
+            // Marcar interação como ativa
+            isInteractionActive = true;
+            currentInteraction = 'easter-egg';
+            
             const robot = document.querySelector('.robot');
             
             // Inicializar áudio se necessário
             initAudio();
             
-            // Tocar som de sistema
-            playSystemSound();
+            // Tocar som especial do easter egg
+            playEasterEggSound();
             
             // Efeito no robô
             robot.style.animation = 'none';
-            robot.style.transform = 'scale(1.2) rotate(360deg)';
-            robot.style.background = 'linear-gradient(135deg, #22c55e, #16a34a, #15803d)';
+            robot.style.transform = 'scale(1.2) rotate(-10deg)';
+            robot.style.background = 'linear-gradient(135deg, #f59e0b, #d97706, #b45309)';
             
-            setTimeout(() => {
+            // Mostrar easter egg no balão com efeito de digitação
+            const robotSpeech = document.getElementById('robotSpeech');
+            robotSpeech.style.transform = 'scale(1.1)';
+            robotSpeech.style.background = 'linear-gradient(135deg, #1f2937, #374151)';
+            robotSpeech.style.borderColor = 'rgba(245, 158, 11, 0.5)';
+            
+            // Efeito de digitação para o easter egg
+            const easterEggText = 'Se você está lendo isso, parabéns! Você é oficialmente curioso 🤖';
+            robotSpeech.innerHTML = '';
+            let charIndex = 0;
+            isTyping = true; // Marcar como digitando
+            
+            const typeInterval = setInterval(() => {
+                if (charIndex < easterEggText.length) {
+                    robotSpeech.innerHTML += easterEggText.charAt(charIndex);
+                    charIndex++;
+                } else {
+                    clearInterval(typeInterval);
+                    isTyping = false; // Marcar como terminou de digitar
+                }
+            }, 50);
+            
+            // Função para resetar ao estado normal
+            const resetToNormal = () => {
                 robot.style.animation = 'robotBounce 3s ease-in-out infinite';
                 robot.style.transform = 'scale(1)';
                 robot.style.background = 'linear-gradient(135deg, #374151, #4b5563, #6b7280)';
-            }, 1000);
+                robotSpeech.style.transform = 'scale(1)';
+                robotSpeech.style.background = 'linear-gradient(135deg, #1f2937, #374151)';
+                robotSpeech.style.borderColor = 'rgba(220, 38, 38, 0.3)';
+                robotSpeech.innerHTML = '<strong>Saudações Navegante. Se está me vendo aqui isso quer dizer que o sistema está funcionando!</strong>';
+                
+                // Liberar controle
+                isInteractionActive = false;
+                currentInteraction = null;
+            };
+            
+            // Adicionar listener para clique no balão durante easter egg
+            const easterEggClickHandler = () => {
+                if (currentInteraction === 'easter-egg' && !isTyping) {
+                    resetToNormal();
+                    robotSpeech.removeEventListener('click', easterEggClickHandler);
+                }
+            };
+            robotSpeech.addEventListener('click', easterEggClickHandler);
+            
+            // Reset automático após 10 segundos
+            setTimeout(() => {
+                if (currentInteraction === 'easter-egg') {
+                    resetToNormal();
+                    robotSpeech.removeEventListener('click', easterEggClickHandler);
+                }
+            }, 10000);
         }
 
         // Sistema de áudio para efeitos sonoros
         let audioContext;
         let isAudioEnabled = true;
+        
+        // Controle de estado para evitar conflitos
+        let isInteractionActive = false;
+        let currentInteraction = null;
+        let isTyping = false;
 
         // Inicializar contexto de áudio
         function initAudio() {
@@ -642,8 +704,49 @@
             setTimeout(() => createRobotSound(800, 0.2, 'sawtooth'), 200);
         }
 
+        // Função para tocar som especial do easter egg
+        function playEasterEggSound() {
+            if (!isAudioEnabled) return;
+            
+            // Sequência especial de "curiosidade" - tons mais alegres e variados
+            const curiositySequence = [
+                { freq: 523, duration: 0.15, type: 'sine' }, // C5
+                { freq: 659, duration: 0.15, type: 'sine' }, // E5
+                { freq: 784, duration: 0.2, type: 'sine' },  // G5
+                { freq: 523, duration: 0.1, type: 'sine' },  // C5
+                { freq: 659, duration: 0.1, type: 'sine' },  // E5
+                { freq: 784, duration: 0.3, type: 'sine' },  // G5
+                { freq: 1047, duration: 0.4, type: 'sine' }  // C6 - final feliz
+            ];
+            
+            curiositySequence.forEach((note, index) => {
+                setTimeout(() => {
+                    createRobotSound(note.freq, note.duration, note.type);
+                }, index * 200);
+            });
+            
+            // Adicionar um "twinkle" final após a sequência principal
+            setTimeout(() => {
+                const twinkleNotes = [1047, 1175, 1319, 1047]; // C6, D6, E6, C6
+                twinkleNotes.forEach((freq, index) => {
+                    setTimeout(() => {
+                        createRobotSound(freq, 0.1, 'sine');
+                    }, index * 100);
+                });
+            }, 2000);
+        }
+
         // Função para interação com o balão de conversa
         function speechClick() {
+            // Verificar se já há uma interação ativa ou se está digitando
+            if (isInteractionActive || isTyping) {
+                return; // Ignorar se já há uma interação em andamento ou se está digitando
+            }
+            
+            // Marcar interação como ativa
+            isInteractionActive = true;
+            currentInteraction = 'speech-beep';
+            
             const robotSpeech = document.getElementById('robotSpeech');
             const robot = document.querySelector('.robot');
             
@@ -668,29 +771,55 @@
             
             // Efeito de digitação
             let i = 0;
+            isTyping = true; // Marcar como digitando
+            
             const typeInterval = setInterval(() => {
                 if (i < roboticText.length) {
                     robotSpeech.innerHTML = `<strong>${roboticText.substring(0, i + 1)}</strong>`;
                     i++;
                 } else {
                     clearInterval(typeInterval);
+                    isTyping = false; // Marcar como terminou de digitar
                 }
             }, 50);
             
-            setTimeout(() => {
+            // Função para resetar ao estado normal
+            const resetToNormal = () => {
                 robot.style.animation = 'robotBounce 3s ease-in-out infinite';
                 robot.style.transform = 'scale(1)';
                 robot.style.background = 'linear-gradient(135deg, #374151, #4b5563, #6b7280)';
                 robotSpeech.style.transform = 'scale(1)';
                 robotSpeech.style.background = 'linear-gradient(135deg, #1f2937, #374151)';
-                robotSpeech.innerHTML = '<strong>Saudações Navegante. Se está me vendo aqui isso quer dizer que o sistema está funcionando</strong>';
-            }, 3000);
+                robotSpeech.innerHTML = '<strong>Saudações Navegante. Se está me vendo aqui isso quer dizer que o sistema está funcionando!</strong>';
+                
+                // Liberar controle
+                isInteractionActive = false;
+                currentInteraction = null;
+            };
+            
+            // Adicionar listener para clique no balão durante beep
+            const beepClickHandler = () => {
+                if (currentInteraction === 'speech-beep' && !isTyping) {
+                    resetToNormal();
+                    robotSpeech.removeEventListener('click', beepClickHandler);
+                }
+            };
+            robotSpeech.addEventListener('click', beepClickHandler);
+            
+            // Reset automático após 10 segundos
+            setTimeout(() => {
+                if (currentInteraction === 'speech-beep') {
+                    resetToNormal();
+                    robotSpeech.removeEventListener('click', beepClickHandler);
+                }
+            }, 10000);
         }
 
         // Timer de 30 segundos para ativar efeito automaticamente
         let autoTriggered = false;
         setTimeout(() => {
-            if (!autoTriggered) {
+            // Só ativar se não houver interação ativa e não foi ativado antes
+            if (!autoTriggered && !isInteractionActive) {
                 autoTriggered = true;
                 speechClick();
             }
