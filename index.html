@@ -14,10 +14,10 @@
         body {
             font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
-                linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+                radial-gradient(circle at 20% 80%, rgba(220, 38, 38, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(185, 28, 28, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d1b1b 100%);
             color: #ffffff;
             overflow-x: hidden;
             min-height: 100vh;
@@ -33,8 +33,8 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+                linear-gradient(rgba(220, 38, 38, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 38, 38, 0.08) 1px, transparent 1px);
             background-size: 50px 50px;
             animation: gridMove 20s linear infinite;
             z-index: 0;
@@ -77,16 +77,16 @@
             backdrop-filter: blur(10px);
         }
 
-        /* Efeito de vidro para o container principal */
+        /* Efeito de vidro fosco preto para o container principal */
         .main-content {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 30px;
             padding: 60px 40px;
             box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                0 8px 32px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
         }
@@ -98,7 +98,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
             animation: shimmer 3s infinite;
         }
 
@@ -191,7 +191,7 @@
         .robot {
             width: 150px;
             height: 150px;
-            background: linear-gradient(135deg, #4ecdc4, #45b7d1, #96ceb4);
+            background: linear-gradient(135deg, #374151, #4b5563, #6b7280);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -200,8 +200,8 @@
             animation: robotBounce 3s ease-in-out infinite;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 
-                0 20px 40px rgba(78, 205, 196, 0.4),
-                inset 0 3px 0 rgba(255, 255, 255, 0.3);
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 3px 0 rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -230,8 +230,8 @@
         .robot:hover {
             transform: scale(1.1) rotate(5deg);
             box-shadow: 
-                0 25px 50px rgba(78, 205, 196, 0.6),
-                inset 0 3px 0 rgba(255, 255, 255, 0.4);
+                0 25px 50px rgba(0, 0, 0, 0.6),
+                inset 0 3px 0 rgba(255, 255, 255, 0.2);
         }
 
         .robot:hover::after {
@@ -240,16 +240,16 @@
 
         /* Balão de conversa do robô */
         .robot-speech {
-            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            background: linear-gradient(135deg, #1f2937, #374151);
             color: white;
             padding: 25px 35px;
             border-radius: 25px;
             font-size: 1.2rem;
             font-weight: 700;
             box-shadow: 
-                0 20px 50px rgba(0, 212, 255, 0.4),
-                inset 0 3px 0 rgba(255, 255, 255, 0.3);
-            border: 3px solid rgba(255, 255, 255, 0.2);
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                inset 0 3px 0 rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(220, 38, 38, 0.3);
             position: relative;
             animation: speechPulse 2s ease-in-out infinite;
             max-width: 450px;
@@ -263,8 +263,9 @@
         .robot-speech:hover {
             transform: scale(1.02);
             box-shadow: 
-                0 25px 60px rgba(0, 212, 255, 0.5),
-                inset 0 3px 0 rgba(255, 255, 255, 0.4);
+                0 25px 60px rgba(0, 0, 0, 0.5),
+                inset 0 3px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(220, 38, 38, 0.5);
         }
 
         .robot-speech::after {
@@ -310,12 +311,12 @@
             gap: 15px;
             margin-bottom: 30px;
             padding: 20px 40px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 255, 136, 0.1));
-            border: 2px solid rgba(0, 212, 255, 0.3);
+            background: linear-gradient(135deg, rgba(31, 41, 55, 0.8), rgba(55, 65, 81, 0.6));
+            border: 2px solid rgba(34, 197, 94, 0.3);
             border-radius: 25px;
             backdrop-filter: blur(20px);
             box-shadow: 
-                0 8px 32px rgba(0, 212, 255, 0.2),
+                0 8px 32px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
@@ -325,8 +326,9 @@
         .status:hover {
             transform: translateY(-2px);
             box-shadow: 
-                0 12px 40px rgba(0, 212, 255, 0.3),
+                0 12px 40px rgba(0, 0, 0, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(34, 197, 94, 0.5);
         }
 
         .status::before {
@@ -348,11 +350,11 @@
         .status-dot {
             width: 16px;
             height: 16px;
-            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            background: linear-gradient(45deg, #22c55e, #16a34a);
             border-radius: 50%;
             animation: blink 2s ease-in-out infinite;
             box-shadow: 
-                0 0 10px rgba(0, 255, 136, 0.6),
+                0 0 10px rgba(34, 197, 94, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             position: relative;
         }
@@ -389,24 +391,24 @@
         /* Partículas interativas modernas */
         .particle {
             position: absolute;
-            background: linear-gradient(45deg, #00d4ff, #00ff88, #ff6b6b);
+            background: linear-gradient(45deg, #6b7280, #9ca3af, #d1d5db);
             border-radius: 50%;
             animation: float 6s ease-in-out infinite;
-            opacity: 0.7;
+            opacity: 0.6;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             box-shadow: 
-                0 0 20px rgba(0, 212, 255, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+                0 0 20px rgba(107, 114, 128, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .particle:hover {
             opacity: 1;
             transform: scale(2) rotate(180deg);
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background: linear-gradient(45deg, #22c55e, #16a34a, #15803d);
             box-shadow: 
-                0 0 30px rgba(255, 107, 107, 0.6),
-                0 0 60px rgba(255, 107, 107, 0.3);
+                0 0 30px rgba(34, 197, 94, 0.6),
+                0 0 60px rgba(34, 197, 94, 0.3);
         }
 
         .particle::before {
@@ -545,12 +547,12 @@
             // Efeito no robô
             robot.style.animation = 'none';
             robot.style.transform = 'scale(1.2) rotate(360deg)';
-            robot.style.background = 'linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #ff6b6b)';
+            robot.style.background = 'linear-gradient(135deg, #22c55e, #16a34a, #15803d)';
             
             setTimeout(() => {
                 robot.style.animation = 'robotBounce 3s ease-in-out infinite';
                 robot.style.transform = 'scale(1)';
-                robot.style.background = 'linear-gradient(135deg, #4ecdc4, #45b7d1, #96ceb4)';
+                robot.style.background = 'linear-gradient(135deg, #374151, #4b5563, #6b7280)';
             }, 1000);
         }
 
@@ -654,11 +656,11 @@
             // Efeito no robô
             robot.style.animation = 'none';
             robot.style.transform = 'scale(1.1) rotate(10deg)';
-            robot.style.background = 'linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #ff6b6b)';
+            robot.style.background = 'linear-gradient(135deg, #22c55e, #16a34a, #15803d)';
             
             // Efeito no balão
             robotSpeech.style.transform = 'scale(1.05)';
-            robotSpeech.style.background = 'linear-gradient(135deg, #ff6b6b, #ff8e8e, #ffa8a8)';
+            robotSpeech.style.background = 'linear-gradient(135deg, #dc2626, #b91c1c)';
             
             // Texto robótico
             const roboticText = 'beep, beep, beep, não há nada para ver aqui!';
@@ -678,9 +680,9 @@
             setTimeout(() => {
                 robot.style.animation = 'robotBounce 3s ease-in-out infinite';
                 robot.style.transform = 'scale(1)';
-                robot.style.background = 'linear-gradient(135deg, #4ecdc4, #45b7d1, #96ceb4)';
+                robot.style.background = 'linear-gradient(135deg, #374151, #4b5563, #6b7280)';
                 robotSpeech.style.transform = 'scale(1)';
-                robotSpeech.style.background = 'linear-gradient(135deg, #00d4ff, #0099cc)';
+                robotSpeech.style.background = 'linear-gradient(135deg, #1f2937, #374151)';
                 robotSpeech.innerHTML = '<strong>Saudações Navegante. Se está me vendo aqui isso quer dizer que o sistema está funcionando</strong>';
             }, 3000);
         }
@@ -720,19 +722,19 @@
                 
                 if (distance < 120) {
                     // Efeito de explosão
-                    particle.style.background = 'linear-gradient(45deg, #ff6b6b, #ff8e8e, #ffa8a8)';
+                    particle.style.background = 'linear-gradient(45deg, #22c55e, #16a34a, #15803d)';
                     particle.style.transform = 'scale(3) rotate(360deg)';
                     particle.style.opacity = '1';
-                    particle.style.boxShadow = '0 0 50px rgba(255, 107, 107, 0.8)';
+                    particle.style.boxShadow = '0 0 50px rgba(34, 197, 94, 0.8)';
                     
                     // Criar efeito de ondas
                     createRipple(e.clientX, e.clientY);
                     
                     setTimeout(() => {
-                        particle.style.background = 'linear-gradient(45deg, #00d4ff, #00ff88, #ff6b6b)';
+                        particle.style.background = 'linear-gradient(45deg, #6b7280, #9ca3af, #d1d5db)';
                         particle.style.transform = 'scale(1)';
-                        particle.style.opacity = '0.7';
-                        particle.style.boxShadow = '0 0 20px rgba(0, 212, 255, 0.4)';
+                        particle.style.opacity = '0.6';
+                        particle.style.boxShadow = '0 0 20px rgba(107, 114, 128, 0.3)';
                     }, 800);
                 }
             });
@@ -746,7 +748,7 @@
             ripple.style.top = y + 'px';
             ripple.style.width = '20px';
             ripple.style.height = '20px';
-            ripple.style.background = 'radial-gradient(circle, rgba(0, 212, 255, 0.6) 0%, transparent 70%)';
+            ripple.style.background = 'radial-gradient(circle, rgba(34, 197, 94, 0.6) 0%, transparent 70%)';
             ripple.style.borderRadius = '50%';
             ripple.style.transform = 'translate(-50%, -50%)';
             ripple.style.animation = 'ripple 1s ease-out forwards';
